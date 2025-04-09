@@ -29,7 +29,6 @@
                 return;
             }
 
-            // Convert seconds to minutes and seconds
             let minutes = Math.floor(time / 60);
             let seconds = time % 60;
 
@@ -39,12 +38,12 @@
 
             updateDisplay();
 
-            clearInterval(interval); // Clear any existing interval
+            clearInterval(interval); 
             interval = setInterval(() => {
                 if (seconds === 0) {
                     if (minutes === 0) {
                         clearInterval(interval);
-                        countdownDisplay.textContent = "Time's up!";
+                        countdownDisplay.textContent = "Time's up! ";
                         return;
                     }
                     minutes--;
@@ -57,9 +56,9 @@
         }
 
         function stopCountdown() {
-            clearInterval(interval); // Stop the countdown
+            clearInterval(interval); 
             const countdownDisplay = document.getElementById('countdown');
-            countdownDisplay.textContent = "Time's up!"; // Display "Time's up!"
+            countdownDisplay.textContent = "Time's up!"; 
         }
     </script>
 </body>
