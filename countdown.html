@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+</head>
+<body class="flex bg-gradient-to-r from-blue-400 to-blue-600 justify-center items-center min-h-screen p-4">
+    <div id="Timer" class="flex flex-col items-center justify-center w-96 h-auto bg-white rounded-lg shadow-2xl p-6">
+        <h1 class="text-3xl font-extrabold text-blue-800 mb-6">Countdown Timer</h1>
+        <input type="number" id="timeInput" placeholder="Enter seconds" class="p-3 rounded-lg mb-6 border border-blue-500 text-black w-full text-center focus:outline-none focus:ring-2 focus:ring-blue-400">
+        <div class="flex space-x-4">
+            <button onclick="startCountdown()" class="bg-gradient-to-r from-blue-500 to-blue-700 text-white p-3 rounded-lg shadow-md hover:shadow-lg hover:from-blue-600 hover:to-blue-800 transition-all">Start Countdown</button>
+            <button onclick="stopCountdown()" class="bg-gradient-to-r from-red-500 to-red-700 text-white p-3 rounded-lg shadow-md hover:shadow-lg hover:from-red-600 hover:to-red-800 transition-all">Stop Countdown</button>
+        </div>
+        <h1 id="countdown" class="text-5xl mt-6 text-blue-800 font-bold"></h1>
+    </div>
+    <script>
+        let interval; // Declare interval globally
+
+        function startCountdown() {
+            const input = document.getElementById('timeInput');
+            const countdownDisplay = document.getElementById('countdown');
+            let time = parseInt(input.value);
+
+            if (isNaN(time) || time <= 0) {
+                countdownDisplay.textContent = "Please enter a valid number!";
+                return;
+            }
+
+            // Convert seconds to minutes and seconds
+            let minutes = Math.floor(time / 60);
+            let seconds = time % 60;
+
+            function updateDisplay() {
+                countdownDisplay.textContent = `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
+            }
+
+            updateDisplay();
+
+            clearInterval(interval); // Clear any existing interval
+            interval = setInterval(() => {
+                if (seconds === 0) {
+                    if (minutes === 0) {
+                        clearInterval(interval);
+                        countdownDisplay.textContent = "Time's up!";
+                        return;
+                    }
+                    minutes--;
+                    seconds = 59;
+                } else {
+                    seconds--;
+                }
+                updateDisplay();
+            }, 1000);
+        }
+
+        function stopCountdown() {
+            clearInterval(interval); // Stop the countdown
+            const countdownDisplay = document.getElementById('countdown');
+            countdownDisplay.textContent = "Time's up!"; // Display "Time's up!"
+        }
+    </script>
+</body>
+</html>
